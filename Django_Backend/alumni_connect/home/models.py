@@ -17,4 +17,6 @@ class custom_user(models.Model):
     password = models.CharField(max_length=50, null = False)
     connections = ArrayField(models.CharField(max_length=100), default=list)
 
+    
+
 
