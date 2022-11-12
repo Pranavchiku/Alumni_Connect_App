@@ -15,7 +15,6 @@ class custom_user(models.Model):
     year_joined = models.DateField()
     year_passed = models.DateField()
     password = models.CharField(max_length=50, null = False)
-    connections = ArrayField(models.CharField(max_length=100), default=list)
 
     
 
