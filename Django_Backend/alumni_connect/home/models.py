@@ -10,5 +10,6 @@ class custom_user(models.Model):
     year_joined = models.DateField()
     year_passed = models.DateField()
     password = models.CharField(max_length=50, null = False)
-    connections = models.ManyToManyField(User)    
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    # connections = models.ManyToManyField(user)    
 
