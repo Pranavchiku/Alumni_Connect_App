@@ -9,6 +9,7 @@ class user(models.Model):
 
 class custom_user(models.Model):
     name  = models.CharField(max_length= 100, null=False)
+    profile= models.ImageField()
     email = models.CharField(max_length=100, null= False)
     phone = models.CharField(max_length=13, null = True)
     branch = models.CharField(max_length=50, null=False)
@@ -19,9 +20,21 @@ class custom_user(models.Model):
     connections = ArrayField(models.CharField(max_length=100), default=list)
     company = models.CharField(max_length=100, null= True)
     working_experience = models.IntegerField()
-    working_field = models.CharField(max_length=50)
+    
+    #fields for students/alumni
+    SDE = models.BooleanField(default=False)
+    ML_DL = models.BooleanField(default=False)
+    DS = models.BooleanField(default=False)
+    Management = models.BooleanField(default=False)
+    Others = models.BooleanField(default=False)
 
 
+class post():
+    name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100, null= False)
+    date = models.DateField()
+    image = models.ImageField()
+    descript = models.CharField(max_length=500)
     
 
 
