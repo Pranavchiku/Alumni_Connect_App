@@ -1,4 +1,5 @@
 import 'package:alumni_connect_app/main.dart';
+import 'package:alumni_connect_app/pages/index.dart';
 import 'package:alumni_connect_app/pages/signup_form_alumni.dart';
 import 'package:alumni_connect_app/widget/image.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,7 @@ class _list_PageState extends State<_list_Page> {
       onVerticalDragUpdate: (details) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SignUpFormAlumni()),
+          MaterialPageRoute(builder: (context) => Index()),
         );
       },
       child: Center(
