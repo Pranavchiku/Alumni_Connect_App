@@ -24,3 +24,10 @@ class customuser(models.Model):
     working_experience = models.IntegerField(default = None)
     company = models.CharField(max_length=100 ,default = None)
     # connections = ArrayField(models.CharField(max_length=100, default=None), default=None)
+
+class post(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100, default=None)
+    date = models.DateField( default=None)
+    image = models.CharField(max_length=100, default=None)
+    descript = models.CharField(max_length=500,  default=None)
