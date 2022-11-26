@@ -24,6 +24,7 @@ class customuser(models.Model):
     working_experience = models.IntegerField(default = None)
     company = models.CharField(max_length=100 ,default = None)
     # connections = ArrayField(models.CharField(max_length=100, default=None), default=None)
+    connections = models.ManyToManyField('self')
 
 class post(models.Model):
     name = models.CharField(max_length=100)
