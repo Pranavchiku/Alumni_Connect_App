@@ -3,6 +3,4 @@ from .models import *
 # Register your models here.
 
 admin.site.register(custom_user)
-
-
-
+admin.site.register(post)
