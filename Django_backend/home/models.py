@@ -16,8 +16,8 @@ class Educationinfo(models.Model):
     email = models.ForeignKey(Userinfo, on_delete=models.CASCADE)
     degree = models.CharField(max_length=100, default=None)
     branch = models.CharField(max_length=50, default=None)
-    year_joined = models.DateField(default=None)
-    year_passed = models.DateField(default=None)
+    year_joined = models.CharField(max_length=50, default=None)
+    year_passed = models.CharField(max_length=50, default=None)
 
 
 class Workinfo(models.Model):

@@ -74,3 +74,27 @@ def user_work_fields(request):
 	res = Response(json.dumps({"message": "User work fields succesfully created."}), status=status.HTTP_201_CREATED, content_type='application/json')
 
 	return res
+
+@api_view(['POST'])
+def user_education_info(request):
+	body = request.body.decode('utf-8')
+	body = json.loads(body)
+
+	curr_user = Userinfo.objects.get(email=body['email'])
+	year_of_joining = body['year_joined'] + "-01-01"
+	year_of_passing = body['year_passed'] + "-01-01"
+	new_user = Educationinfo.objects.create(
+		email = curr_user,
+		degree = body['degree'],
+		year_joined = year_of_joining,
+		year_passed = year_of_passing,
+		branch = body['branch'],
+	)
+
+	res = Response(json.dumps({"message": "User education info succesfully created."}), status=status.HTTP_201_CREATED, content_type='application/json')
+
+	# delete all user entried
+	# Educationinfo.objects.all().delete()
+	# Userinfo.objects.all().delete()
+
+	return res
