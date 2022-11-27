@@ -6,7 +6,8 @@ import 'index.dart';
 
 class FieldsOfInterest extends StatefulWidget {
   String email;
-  FieldsOfInterest({required this.email});
+  bool isAlum;
+  FieldsOfInterest({required this.email, required this.isAlum});
 
   @override
   State<FieldsOfInterest> createState() => _FieldsOfInterestState();

@@ -45,7 +45,7 @@ class _SignUpFormState extends State<SignUpForm> {
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                  builder: (context) => FieldsOfInterest(email: _email!)),
+                  builder: (context) => FieldsOfInterest(email: _email!, isAlum: widget.isAlum)),
               (route) => false);
         } else {
           showError("Internal Server Error");
