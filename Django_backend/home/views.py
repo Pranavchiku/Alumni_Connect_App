@@ -239,3 +239,19 @@ def top_suggestion(request):
 			"top_suggestion": final_list
 		}
 		return Response(top_suggestion_list, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def get_field_count(request):
+	sde_count = Workfield.objects.filter(SDE=True).count()
+	ml_dl_count = Workfield.objects.filter(ML_DL=True).count()
+	ds_count = Workfield.objects.filter(DS=True).count()
+	management_count = Workfield.objects.filter(Management=True).count()
+
+	field_count = {
+		"SDE": sde_count,
+		"ML_DL": ml_dl_count,
+		"DS": ds_count,
+		"Management": management_count
+	}
+
+	return Response(field_count, status=status.HTTP_200_OK)
