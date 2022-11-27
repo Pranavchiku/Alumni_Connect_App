@@ -33,6 +33,36 @@ class FieldAlumniState extends State<FieldAlumni> {
           alumniList = items;
         });
       }
+    } else if (widget.isML_DL) {
+      var url = Uri.parse("http://127.0.0.1:8001/api/get_ml_dl/");
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        var items = json.decode(response.body) as List;
+        setState(() {
+          alumniList = items;
+        });
+      }
+    } else if (widget.isDS) {
+      var url = Uri.parse("http://127.0.0.1:8001/api/get_ds/");
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        var items = json.decode(response.body) as List;
+        setState(() {
+          alumniList = items;
+        });
+      }
+    } else if (widget.isMBA) {
+      var url = Uri.parse("http://127.0.0.1:8001/api/get_management/");
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        var items = json.decode(response.body) as List;
+        setState(() {
+          alumniList = items;
+        });
+      }
     }
   }
 
