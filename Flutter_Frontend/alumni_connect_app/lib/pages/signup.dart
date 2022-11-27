@@ -1,6 +1,6 @@
 import 'package:alumni_connect_app/main.dart';
 import 'package:alumni_connect_app/pages/index.dart';
-import 'package:alumni_connect_app/pages/signup_form_alumni.dart';
+import 'package:alumni_connect_app/pages/signup_form.dart';
 import 'package:alumni_connect_app/widget/image.dart';
 import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -90,9 +90,11 @@ class _list_PageState extends State<_list_Page> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onVerticalDragUpdate: (details) {
+        print(widget.curr);
+
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Index()),
+          MaterialPageRoute(builder: (context) => SignUpForm(isAlum: widget.curr == 1 ? true : false)),
         );
       },
       child: Center(

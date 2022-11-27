@@ -1,43 +1,55 @@
-import 'package:alumni_connect_app/pages/index.dart';
-import 'package:alumni_connect_app/pages/signup.dart';
+import 'package:alumni_connect_app/pages/field_of_interest.dart';
+import 'package:alumni_connect_app/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class LoginPage extends StatefulWidget {
+import 'index.dart';
+
+class SignUpForm extends StatefulWidget {
+  bool isAlum;
+  SignUpForm({Key? key, required this.isAlum}) : super(key: key);
+
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpFormState extends State<SignUpForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String? _email, _password;
+  String? _email, _password, _personName, _confirmPassword, _phoneNumber;
 
-  login() async {
+  signup() async {
     if (_formKey != null &&
         _formKey.currentState != null &&
         _formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      print(_email);
-      print(_password);
 
-      Map<String, dynamic> requestPayload = {
-        "email": _email,
-        "password": _password
-      };
+      if (_confirmPassword != _password) {
+        showError("Password and Confirm Password do not match");
+      } else {
+        Map<String, dynamic> requestPayload = {
+          "email": _email,
+          "password": _password,
+          "name": _personName,
+          "phone": _phoneNumber
+        };
 
-      var url = Uri.parse('http://127.0.0.1:8001/api/user_login/');
-      var response = await http.post(
-        url,
-        body: jsonEncode(requestPayload),
-      );
+        var url = Uri.parse('http://127.0.0.1:8001/api/user_signup/');
+        var response = await http.post(
+          url,
+          body: jsonEncode(requestPayload),
+        );
 
-      var body = jsonDecode(response.body);
-      if (response.statusCode == 202) {
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) => Index()), (route) => false);
-      } else if (response.statusCode == 400) {
-        showError("Invalid Credentials");
+        var body = jsonDecode(response.body);
+        if (response.statusCode == 201) {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => FieldsOfInterest(email: _email!)),
+              (route) => false);
+        } else {
+          showError("Internal Server Error");
+        }
       }
     }
   }
@@ -67,7 +79,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -97,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Hello, \nWelcome Back",
+                "Signup",
                 style: Theme.of(context).textTheme.headline1!.copyWith(
                       fontSize: size.width * 0.1,
                       fontWeight: FontWeight.bold,
@@ -123,14 +134,60 @@ class _LoginPageState extends State<LoginPage> {
                           child: TextFormField(
                             validator: (input) {
                               if (input != null && input.isEmpty)
-                                return "Enter Email or Phone number";
+                                return "Enter Name";
                             },
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "Email or Phone number",
+                              hintText: "Name",
+                              prefixIcon: Icon(Icons.person_add),
+                            ),
+                            onSaved: (input) => _personName = input!,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: TextFormField(
+                            validator: (input) {
+                              if (input != null && input.isEmpty)
+                                return "Enter Email";
+                            },
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Email",
                               prefixIcon: Icon(Icons.email),
                             ),
                             onSaved: (input) => _email = input!,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: TextFormField(
+                            validator: (input) {
+                              if (input != null && input.isEmpty)
+                                return "Enter Phone number";
+                            },
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Phone Number",
+                              prefixIcon: Icon(Icons.call),
+                            ),
+                            onSaved: (input) => _phoneNumber = input!,
                           ),
                         ),
                         SizedBox(
@@ -157,14 +214,36 @@ class _LoginPageState extends State<LoginPage> {
                             onSaved: (input) => _password = input!,
                           ),
                         ),
-                        SizedBox(height: 20.0),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: TextFormField(
+                            validator: (input) {
+                              if (input != null && input.isEmpty)
+                                return "Enter password again";
+                            },
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Confirm Password",
+                              prefixIcon: Icon(Icons.lock),
+                            ),
+                            obscureText: true,
+                            onSaved: (input) => _confirmPassword = input!,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
                       ],
                     ),
                   ),
-                  Text(
-                    "Forgot Password?",
-                    style: Theme.of(context).textTheme.bodyText1,
-                  )
                 ],
               ),
               Column(
@@ -177,9 +256,9 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: TextButton(
-                      onPressed: login,
+                      onPressed: signup,
                       child: Text(
-                        "Login",
+                        "Signup",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -194,13 +273,14 @@ class _LoginPageState extends State<LoginPage> {
                   //     style: Theme.of(context).textTheme.bodyText1)
                   GestureDetector(
                       child: Text(
-                        "Create Account",
+                        "Already have an Account? Login",
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                       onTap: () {
                         Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(builder: (context) => SignUp()),
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
                             (route) => false);
                       }),
                 ],
