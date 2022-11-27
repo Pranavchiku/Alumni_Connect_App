@@ -14,38 +14,11 @@ class Index extends StatefulWidget {
 }
 
 class _IndexState extends State<Index> {
-  List<dynamic> _topSuggestionCard = <Widget>[
-    TopSuggestionCard(
-      name: "Todd Cook",
-      imageLink: "assets/student-min.jpg",
-      designation: "CEO at Apple",
-    ),
-    TopSuggestionCard(
-      name: "Todd Cook",
-      imageLink: "assets/student-min.jpg",
-      designation: "CEO at Apple",
-    ),
-    TopSuggestionCard(
-      name: "Todd Cook",
-      imageLink: "assets/student-min.jpg",
-      designation: "CEO at Apple",
-    ),
-    TopSuggestionCard(
-      name: "Todd Cook",
-      imageLink: "assets/student-min.jpg",
-      designation: "CEO at Apple",
-    ),
-    TopSuggestionCard(
-      name: "Todd Cook",
-      imageLink: "assets/student-min.jpg",
-      designation: "CEO at Apple",
-    ),
-    TopSuggestionCard(
-      name: "Todd Cook",
-      imageLink: "assets/student-min.jpg",
-      designation: "CEO at Apple",
-    ),
-  ];
+  List<dynamic> _topSuggestionCard = <Widget>[];
+  String? _sdeCount = "0";
+  String? ml_dlCount = "0";
+  String? _dsCount = "0";
+  String? _mbaCount = "0";
 
   fetchTopSuggestion() async {
     var url = Uri.parse('http://127.0.0.1:8001/api/top_suggestion/');
@@ -56,7 +29,6 @@ class _IndexState extends State<Index> {
       body: jsonEncode(requestPayload),
     );
 
-    print("here");
     var body = jsonDecode(response.body);
     body = body["top_suggestion"] as List;
     if (response.statusCode == 200) {
@@ -73,10 +45,27 @@ class _IndexState extends State<Index> {
     }
   }
 
+  fetchFieldCount() async {
+    var url = Uri.parse("http://127.0.0.1:8001/api/field_count/");
+    var response = await http.get(url);
+
+    var body = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _sdeCount = body["SDE"].toString();
+        ml_dlCount = body["ML_DL"].toString();
+        _dsCount = body["DS"].toString();
+        _mbaCount = body["Management"].toString();
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     fetchTopSuggestion();
+    fetchFieldCount();
   }
 
   Widget build(BuildContext context) {
@@ -185,16 +174,24 @@ class _IndexState extends State<Index> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Category(
-                        size: size,
-                        alumniCount: "10",
-                        categoryName: "SDE",
-                        imageLink: "assets/student-min.jpg",
+                      GestureDetector(
+                        onTap: () {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => ()),
+                          // );
+                        },
+                        child: Category(
+                          size: size,
+                          alumniCount: _sdeCount!,
+                          categoryName: "SDE",
+                          imageLink: "assets/student-min.jpg",
+                        ),
                       ),
                       Category(
                         size: size,
-                        alumniCount: "10",
-                        categoryName: "SDE",
+                        alumniCount: ml_dlCount!,
+                        categoryName: "ML_DL",
                         imageLink: "assets/student-min.jpg",
                       ),
                     ],
@@ -207,14 +204,14 @@ class _IndexState extends State<Index> {
                     children: [
                       Category(
                         size: size,
-                        alumniCount: "10",
-                        categoryName: "SDE",
+                        alumniCount: _dsCount!,
+                        categoryName: "DS",
                         imageLink: "assets/student-min.jpg",
                       ),
                       Category(
                         size: size,
-                        alumniCount: "10",
-                        categoryName: "SDE",
+                        alumniCount: _mbaCount!,
+                        categoryName: "MBA",
                         imageLink: "assets/student-min.jpg",
                       ),
                     ],
@@ -273,17 +270,6 @@ class _IndexState extends State<Index> {
                           builder: (context) => Index(email: widget.email)));
                 },
               ),
-              // IconButton(
-              //   icon: Icon(Icons.camera_alt_rounded, color: Colors.black),
-              //   onPressed: () {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => HomePage()));
-              //   },
-              // ),
-              // IconButton(
-              //   icon: Icon(Icons.photo, color: Colors.black),
-              //   onPressed: () {},
-              // ),
               IconButton(
                 icon: Icon(Icons.person, color: Colors.black),
                 onPressed: () {},
