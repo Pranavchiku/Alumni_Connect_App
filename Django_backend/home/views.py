@@ -255,3 +255,21 @@ def get_field_count(request):
 	}
 
 	return Response(field_count, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def get_sde(request):
+	sde = Workfield.objects.filter(SDE=True)
+	sde = serializers.serialize('json', sde)
+	sde = json.loads(sde)
+
+	final_list = []
+	for user in sde:
+		email = user['fields']['email']
+		user = Userinfo.objects.get(id=email)
+		dict = {
+			"name": user.name,
+			"email": user.email
+		}
+		final_list.append(dict)
+
+	return Response(final_list, status=status.HTTP_200_OK)

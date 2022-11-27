@@ -12,4 +12,5 @@ urlpatterns = [
     path('user_work_info/', user_work_info, name="Userworkinfo"),
     path('top_suggestion/', top_suggestion, name="Topsuggestions"),
     path('field_count/', get_field_count, name="Fieldcount"),
+    path('get_sde/', get_sde, name="SDE"),
 ]
