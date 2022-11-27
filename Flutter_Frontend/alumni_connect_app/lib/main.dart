@@ -1,3 +1,4 @@
+import 'package:alumni_connect_app/pages/login.dart';
 import 'package:alumni_connect_app/pages/signup.dart';
 import 'package:alumni_connect_app/widget/image.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,12 @@ class _LandingPageState extends State<LandingPage> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
+                  },
                   child: Text(
                     "Login",
                     style: TextStyle(
