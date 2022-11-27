@@ -324,7 +324,11 @@ class _IndexState extends State<Index> {
                 },
               ),
               IconButton(
-                icon: Icon(Icons.person, color: Colors.black),
+                icon: Icon(Icons.person_add, color: Colors.black),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Icon(Icons.add_box_outlined, color: Colors.black),
                 onPressed: () {},
               ),
               IconButton(
