@@ -10,5 +10,5 @@ urlpatterns = [
     path('user_work_fields/', user_work_fields, name="Userworkfields"),
     path('user_education_info/', user_education_info, name="Usereducationinfo"),
     path('user_work_info/', user_work_info, name="Userworkinfo"),
-
+    path('top_suggestion/', top_suggestion, name="Topsuggestions"),
 ]

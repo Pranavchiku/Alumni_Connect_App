@@ -24,10 +24,16 @@ def user_login(request):
 	body = request.body.decode('utf-8')
 	body = json.loads(body)
 
+	print(body['email'])
 	try:
 		if Userinfo.objects.get(email=body['email']) or Userinfo.objects.get(phone=body['email']):
-			if Userinfo.objects.get(email=body['email']).password == body['password'] or Userinfo.objects.get(phone=body['email']).password == body['password']:
-				return Response(json.dumps({"message": "User succesfully logged in."}), status=status.HTTP_202_ACCEPTED, content_type='application/json')
+			if (Userinfo.objects.get(email=body['email']).password == body['password'] )or Userinfo.objects.get(phone=body['email']).password == body['password']:
+				message = {
+					"message": "Login successful",
+				}
+				return Response(message, status=status.HTTP_200_OK)
+
+
 			else:
 				return Response(json.dumps({"message": "Password is incorrect."}), status=status.HTTP_400_BAD_REQUEST, content_type='application/json')
 	except:
@@ -110,3 +116,126 @@ def user_work_info(request):
 	res = Response(json.dumps({"message": "Work info succesfully created."}), status=status.HTTP_201_CREATED, content_type='application/json')
 
 	return res
+@api_view(['POST','GET'])
+def top_suggestion(request):
+	
+	body = request.body.decode('utf-8')
+	body = json.loads(body)
+
+	curr_user = Userinfo.objects.get(email=body['email'])
+	user_fields = Workfield.objects.get(email = curr_user)
+	SDE = user_fields.SDE
+	ML_DL = user_fields.ML_DL
+	DS = user_fields.DS
+	Management = user_fields.Management
+	Others = user_fields.Others
+
+	if SDE:
+		# find those users who have SDE in their fields
+		suggestions = serializers.serialize('json', Workfield.objects.filter(SDE=True))
+		# make suggestion a json
+		suggestions = json.loads(suggestions)
+
+		#iterate over suggestions, and find name of the user with same email
+		final_list = []
+		for suggestion in suggestions:
+			print(suggestion)
+			email = suggestion['fields']['email']
+			print(email)
+			user = Userinfo.objects.get(id=email)
+			dict = {
+				"name": user.name,
+				"email": user.email
+			}
+			final_list.append(dict)
+
+		
+		top_suggestion_list = {
+			"top_suggestion": final_list
+		}
+		return Response(top_suggestion_list, status=status.HTTP_200_OK)
+	elif ML_DL:
+		suggestions = serializers.serialize('json', Workfield.objects.filter(ML_DL=True))
+		suggestions = json.loads(suggestions)
+
+		print(suggestions)
+		#iterate over suggestions, and find name of the user with same email
+		final_list = []
+		for suggestion in suggestions:
+			print(suggestion)
+			email = suggestion['fields']['email']
+			print(email)
+			user = Userinfo.objects.get(id=email)
+			dict = {
+				"name": user.name,
+				"email": user.email
+			}
+			final_list.append(dict)
+
+		top_suggestion_list = {
+			"top_suggestion": final_list
+		}
+		return Response(top_suggestion_list, status=status.HTTP_200_OK)
+	elif DS:
+		suggestions = serializers.serialize('json', Workfield.objects.filter(DS=True))
+		suggestions = json.loads(suggestions)
+
+		print(suggestions)
+		#iterate over suggestions, and find name of the user with same email
+		final_list = []
+		for suggestion in suggestions:
+			print(suggestion)
+			email = suggestion['fields']['email']
+			print(email)
+			user = Userinfo.objects.get(id=email)
+			final_list.append(dict)
+
+
+		top_suggestion_list = {
+			"top_suggestion": final_list
+		}
+		return Response(top_suggestion_list, status=status.HTTP_200_OK)
+	elif Management:
+		suggestions = serializers.serialize('json', Workfield.objects.filter(Management=True))
+		suggestions = json.loads(suggestions)
+
+		print(suggestions)
+		#iterate over suggestions, and find name of the user with same email
+		final_list = []
+		for suggestion in suggestions:
+			print(suggestion)
+			email = suggestion['fields']['email']
+			print(email)
+			user = Userinfo.objects.get(id=email)
+			dict = {
+				"name": user.name,
+				"email": user.email
+			}
+			final_list.append(dict)
+
+		top_suggestion_list = {
+			"top_suggestion": final_list
+		}
+		return Response(top_suggestion_list, status=status.HTTP_200_OK)
+	elif Others:
+		suggestions = serializers.serialize('json', Workfield.objects.filter(Others=True))
+		suggestions = json.loads(suggestions)
+
+		print(suggestions)
+		#iterate over suggestions, and find name of the user with same email
+		final_list = []
+		for suggestion in suggestions:
+			print(suggestion)
+			email = suggestion['fields']['email']
+			print(email)
+			user = Userinfo.objects.get(id=email)
+			dict = {
+				"name": user.name,
+				"email": user.email
+			}
+			final_list.append(dict)
+
+		top_suggestion_list = {
+			"top_suggestion": final_list
+		}
+		return Response(top_suggestion_list, status=status.HTTP_200_OK)
