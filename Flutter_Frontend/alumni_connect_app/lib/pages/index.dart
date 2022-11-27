@@ -1,4 +1,5 @@
 import 'package:alumni_connect_app/main.dart';
+import 'package:alumni_connect_app/pages/alums_page.dart';
 import 'package:alumni_connect_app/widget/image.dart';
 import 'package:alumni_connect_app/widget/top_suggestion_card.dart';
 import 'package:flutter/material.dart';
@@ -176,10 +177,17 @@ class _IndexState extends State<Index> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => ()),
-                          // );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FieldAlumni(
+                                isSDE: true,
+                                isML_DL: false,
+                                isDS: false,
+                                isMBA: false,
+                              ),
+                            ),
+                          );
                         },
                         child: Category(
                           size: size,
@@ -188,11 +196,26 @@ class _IndexState extends State<Index> {
                           imageLink: "assets/student-min.jpg",
                         ),
                       ),
-                      Category(
-                        size: size,
-                        alumniCount: ml_dlCount!,
-                        categoryName: "ML_DL",
-                        imageLink: "assets/student-min.jpg",
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FieldAlumni(
+                                isSDE: false,
+                                isML_DL: true,
+                                isDS: false,
+                                isMBA: false,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Category(
+                          size: size,
+                          alumniCount: ml_dlCount!,
+                          categoryName: "ML_DL",
+                          imageLink: "assets/student-min.jpg",
+                        ),
                       ),
                     ],
                   ),
@@ -202,17 +225,47 @@ class _IndexState extends State<Index> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Category(
-                        size: size,
-                        alumniCount: _dsCount!,
-                        categoryName: "DS",
-                        imageLink: "assets/student-min.jpg",
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FieldAlumni(
+                                isSDE: false,
+                                isML_DL: false,
+                                isDS: true,
+                                isMBA: false,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Category(
+                          size: size,
+                          alumniCount: _dsCount!,
+                          categoryName: "DS",
+                          imageLink: "assets/student-min.jpg",
+                        ),
                       ),
-                      Category(
-                        size: size,
-                        alumniCount: _mbaCount!,
-                        categoryName: "MBA",
-                        imageLink: "assets/student-min.jpg",
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FieldAlumni(
+                                isSDE: false,
+                                isML_DL: false,
+                                isDS: false,
+                                isMBA: true,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Category(
+                          size: size,
+                          alumniCount: _mbaCount!,
+                          categoryName: "MBA",
+                          imageLink: "assets/student-min.jpg",
+                        ),
                       ),
                     ],
                   ),

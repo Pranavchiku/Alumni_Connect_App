@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(
     MaterialApp(
-      home: LandingPage(),
+      home: Index(email: "goswami.4@iitj.ac.in"),
       debugShowCheckedModeBanner: false,
     ),
   );
@@ -87,8 +87,8 @@ class _LandingPageState extends State<LandingPage> {
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(
-                    //       builder: (context) =>
-                    //           EducationInfo(email: "123", isAlum: true)),
+                    //       builder: (context) => EducationInfo(
+                    //           email: "goswami.4@iitj.ac.in", isAlum: true)),
                     // );
                   },
                   child: Text(
