@@ -51,7 +51,8 @@ class _EducationInfoState extends State<EducationInfo> {
         } else {
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => Index()),
+              MaterialPageRoute(
+                  builder: (context) => Index(email: widget.email)),
               (route) => false);
         }
       } else {

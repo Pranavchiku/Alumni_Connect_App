@@ -1,5 +1,6 @@
 import 'package:alumni_connect_app/pages/index.dart';
 import 'package:alumni_connect_app/pages/signup.dart';
+import 'package:alumni_connect_app/widget/top_suggestion_card.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -12,7 +13,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? _email, _password;
-
+  List<dynamic> _topSuggestionCard = <Widget>[];
   login() async {
     if (_formKey != null &&
         _formKey.currentState != null &&
@@ -33,9 +34,11 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       var body = jsonDecode(response.body);
-      if (response.statusCode == 202) {
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) => Index()), (route) => false);
+      if (response.statusCode == 200) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => Index(email: _email!)),
+            (route) => false);
       } else if (response.statusCode == 400) {
         showError("Invalid Credentials");
       }

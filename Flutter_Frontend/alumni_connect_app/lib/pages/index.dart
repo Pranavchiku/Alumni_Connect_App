@@ -1,9 +1,13 @@
+import 'package:alumni_connect_app/main.dart';
 import 'package:alumni_connect_app/widget/image.dart';
 import 'package:alumni_connect_app/widget/top_suggestion_card.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Index extends StatefulWidget {
-  const Index({super.key});
+  String email;
+  Index({required this.email});
 
   @override
   State<Index> createState() => _IndexState();
@@ -42,7 +46,39 @@ class _IndexState extends State<Index> {
       designation: "CEO at Apple",
     ),
   ];
+
+  fetchTopSuggestion() async {
+    var url = Uri.parse('http://127.0.0.1:8001/api/top_suggestion/');
+    Map<String, dynamic> requestPayload = {"email": widget.email};
+
+    var response = await http.post(
+      url,
+      body: jsonEncode(requestPayload),
+    );
+
+    print("here");
+    var body = jsonDecode(response.body);
+    body = body["top_suggestion"] as List;
+    if (response.statusCode == 200) {
+      List<dynamic> tempCard = <Widget>[];
+      for (var i = 0; i < body.length; i++) {
+        tempCard.add(TopSuggestionCard(
+            name: body[i]['name'],
+            imageLink: "assets/student-min.jpg",
+            designation: "CEO at Apple"));
+      }
+      setState(() {
+        _topSuggestionCard = tempCard;
+      });
+    }
+  }
+
   @override
+  void initState() {
+    super.initState();
+    fetchTopSuggestion();
+  }
+
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -65,7 +101,7 @@ class _IndexState extends State<Index> {
           left: 20,
           right: 20,
           bottom: size.height * 0.05,
-          top: size.height * 0.06,
+          // top: size.height * 0.06,
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -199,12 +235,107 @@ class _IndexState extends State<Index> {
               const SizedBox(
                 height: 20,
               ),
+              Container(
+                height: size.height * 0.07,
+                width: size.width * 0.9,
+                decoration: BoxDecoration(
+                  color: Colors.blue[900],
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: TextButton(
+                  onPressed: fetchTopSuggestion,
+                  child: Text(
+                    "Temp",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        height: 55.0,
+        child: BottomAppBar(
+          color: Colors.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.home, color: Colors.black),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Index(email: widget.email)));
+                },
+              ),
+              // IconButton(
+              //   icon: Icon(Icons.camera_alt_rounded, color: Colors.black),
+              //   onPressed: () {
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => HomePage()));
+              //   },
+              // ),
+              // IconButton(
+              //   icon: Icon(Icons.photo, color: Colors.black),
+              //   onPressed: () {},
+              // ),
+              IconButton(
+                icon: Icon(Icons.person, color: Colors.black),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Icon(Icons.logout, color: Colors.black),
+                onPressed: () {
+                  showAlertDialog(context);
+                },
+              )
             ],
           ),
         ),
       ),
     );
   }
+}
+
+showAlertDialog(BuildContext context) {
+  // set up the button
+  // Widget logOutButton = SalomonBottomBarItem(
+  //   icon: Icon(Icons.logout),
+  //   title: Text("LogOut"),
+  //   selectedColor: Colors.redAccent,
+  // );
+  Widget okButton = TextButton(
+    child: Text("Logout"),
+    onPressed: () {
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LandingPage()),
+          (route) => false);
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Logout Alert!!"),
+    content: Text("Are you sure you want to logout?"),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
 
 class Category extends StatelessWidget {

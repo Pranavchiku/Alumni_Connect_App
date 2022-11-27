@@ -1,4 +1,5 @@
 import 'package:alumni_connect_app/pages/education_info.dart';
+import 'package:alumni_connect_app/pages/index.dart';
 import 'package:alumni_connect_app/pages/login.dart';
 import 'package:alumni_connect_app/pages/signup.dart';
 import 'package:alumni_connect_app/widget/image.dart';

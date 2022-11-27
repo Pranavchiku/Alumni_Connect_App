@@ -35,8 +35,10 @@ class _WorkInfoState extends State<WorkInfo> {
       var body = jsonDecode(response.body);
 
       if (response.statusCode == 201) {
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) => Index()), (route) => false);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => Index(email: widget.email)),
+            (route) => false);
       } else {
         showError("Internal Server Error");
       }
