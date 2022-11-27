@@ -19,16 +19,12 @@ class Educationinfo(models.Model):
     year_joined = models.DateField(default=None)
     year_passed = models.DateField(default=None)
 
-    def __str__(self):
-        return self.email
 
 class Workinfo(models.Model):
     email = models.ForeignKey(Userinfo, on_delete=models.CASCADE)
     company = models.CharField(max_length=100, default=None)
     working_experience = models.IntegerField(default=None)
 
-    def __str__(self):
-        return self.email
 
 class Workfield(models.Model):
     email = models.ForeignKey(Userinfo, on_delete=models.CASCADE)
@@ -38,8 +34,6 @@ class Workfield(models.Model):
     Management = models.BooleanField(default=False)
     Others = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.email
 
 class Userconnection(models.Model):
     user_email = models.ForeignKey(Userinfo, on_delete=models.CASCADE, related_name='user_email')
@@ -54,5 +48,3 @@ class Userpost(models.Model):
     image = models.CharField(max_length=100, default=None)
     descript = models.CharField(max_length=500, default=None)
 
-    def __str__(self):
-        return self.email

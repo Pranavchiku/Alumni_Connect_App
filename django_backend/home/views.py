@@ -32,3 +32,45 @@ def user_login(request):
 				return Response(json.dumps({"message": "Password is incorrect."}), status=status.HTTP_400_BAD_REQUEST, content_type='application/json')
 	except:
 		return Response(json.dumps({"message": "User does not exist."}), status=status.HTTP_400_BAD_REQUEST, content_type='application/json')
+
+
+@api_view(['POST'])
+def user_signup(request):
+	body = request.body.decode('utf-8')
+	body = json.loads(body)
+
+	try:
+		if Userinfo.objects.get(email=body['email']) or Userinfo.objects.get(phone=body['email']):
+				return Response(json.dumps({"message": "User already exists."}), status=status.HTTP_400_BAD_REQUEST, content_type='application/json')
+	except Userinfo.DoesNotExist:
+		pass
+
+	new_user = Userinfo.objects.create(
+		name = body['name'],
+		email = body['email'],
+		phone = body['phone'],
+		password = body['password'],
+	)
+
+	res = Response(json.dumps({"message": "User succesfully created."}), status=status.HTTP_201_CREATED, content_type='application/json')
+
+	return res
+
+@api_view(['POST'])
+def user_work_fields(request):
+	body = request.body.decode('utf-8')
+	body = json.loads(body)
+
+	curr_user = Userinfo.objects.get(email=body['email'])
+	new_user = Workfield.objects.create(
+		email = curr_user,
+		SDE = body['SDE'],
+		ML_DL = body['ML_DL'],
+		DS = body['DS'],
+		Management = body['Management'],
+		Others = body['Others']
+	)
+
+	res = Response(json.dumps({"message": "User work fields succesfully created."}), status=status.HTTP_201_CREATED, content_type='application/json')
+
+	return res
