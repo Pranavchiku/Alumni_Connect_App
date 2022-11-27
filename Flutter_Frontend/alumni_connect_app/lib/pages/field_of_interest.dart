@@ -1,3 +1,4 @@
+import 'package:alumni_connect_app/pages/education_info.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -38,8 +39,12 @@ class _FieldsOfInterestState extends State<FieldsOfInterest> {
 
     var body = jsonDecode(response.body);
     if (response.statusCode == 201) {
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => Index()), (route) => false);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  EducationInfo(email: widget.email, isAlum: widget.isAlum)),
+          (route) => false);
     } else {
       showError("Internal Server Error");
     }

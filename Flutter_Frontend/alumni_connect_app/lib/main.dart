@@ -1,3 +1,4 @@
+import 'package:alumni_connect_app/pages/education_info.dart';
 import 'package:alumni_connect_app/pages/login.dart';
 import 'package:alumni_connect_app/pages/signup.dart';
 import 'package:alumni_connect_app/widget/image.dart';
@@ -82,6 +83,12 @@ class _LandingPageState extends State<LandingPage> {
                       context,
                       MaterialPageRoute(builder: (context) => SignUp()),
                     );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) =>
+                    //           EducationInfo(email: "123", isAlum: true)),
+                    // );
                   },
                   child: Text(
                     "Signup",
