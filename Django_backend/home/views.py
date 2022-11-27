@@ -273,3 +273,57 @@ def get_sde(request):
 		final_list.append(dict)
 
 	return Response(final_list, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def get_ml_dl(request):
+	ml_dl = Workfield.objects.filter(ML_DL=True)
+	ml_dl = serializers.serialize('json', ml_dl)
+	ml_dl = json.loads(ml_dl)
+
+	final_list = []
+	for user in ml_dl:
+		email = user['fields']['email']
+		user = Userinfo.objects.get(id=email)
+		dict = {
+			"name": user.name,
+			"email": user.email
+		}
+		final_list.append(dict)
+
+	return Response(final_list, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def get_ds(request):
+	ds = Workfield.objects.filter(DS=True)
+	ds = serializers.serialize('json', ds)
+	ds = json.loads(ds)
+
+	final_list = []
+	for user in ds:
+		email = user['fields']['email']
+		user = Userinfo.objects.get(id=email)
+		dict = {
+			"name": user.name,
+			"email": user.email
+		}
+		final_list.append(dict)
+
+	return Response(final_list, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def get_management(request):
+	management = Workfield.objects.filter(Management=True)
+	management = serializers.serialize('json', management)
+	management = json.loads(management)
+
+	final_list = []
+	for user in management:
+		email = user['fields']['email']
+		user = Userinfo.objects.get(id=email)
+		dict = {
+			"name": user.name,
+			"email": user.email
+		}
+		final_list.append(dict)
+
+	return Response(final_list, status=status.HTTP_200_OK)

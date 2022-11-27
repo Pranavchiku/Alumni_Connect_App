@@ -13,4 +13,8 @@ urlpatterns = [
     path('top_suggestion/', top_suggestion, name="Topsuggestions"),
     path('field_count/', get_field_count, name="Fieldcount"),
     path('get_sde/', get_sde, name="SDE"),
+    path('get_ml_dl/', get_ml_dl, name="ML_DL"),
+    path('get_ds/', get_ds, name="DS"),
+    path('get_management/', get_management, name="Management"),
+
 ]
