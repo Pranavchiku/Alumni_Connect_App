@@ -9,4 +9,6 @@ urlpatterns = [
     path('user_signup/', user_signup, name="Usersignup"),
     path('user_work_fields/', user_work_fields, name="Userworkfields"),
     path('user_education_info/', user_education_info, name="Usereducationinfo"),
+    path('user_work_info/', user_work_info, name="Userworkinfo"),
+
 ]

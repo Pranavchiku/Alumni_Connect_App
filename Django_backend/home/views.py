@@ -93,8 +93,20 @@ def user_education_info(request):
 
 	res = Response(json.dumps({"message": "User education info succesfully created."}), status=status.HTTP_201_CREATED, content_type='application/json')
 
-	# delete all user entried
-	# Educationinfo.objects.all().delete()
-	# Userinfo.objects.all().delete()
+	return res
+
+@api_view(['POST'])
+def user_work_info(request):
+	body = request.body.decode('utf-8')
+	body = json.loads(body)
+
+	curr_user = Userinfo.objects.get(email=body['email'])
+	new_user = Workinfo.objects.create(
+		email=curr_user,
+		company = body['company'],
+		working_experience = body['work']
+	)
+
+	res = Response(json.dumps({"message": "Work info succesfully created."}), status=status.HTTP_201_CREATED, content_type='application/json')
 
 	return res
