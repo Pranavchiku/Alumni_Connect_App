@@ -327,3 +327,42 @@ def get_management(request):
 		final_list.append(dict)
 
 	return Response(final_list, status=status.HTTP_200_OK)
+
+@api_view(['POST','GET'])
+def connection_request(request):
+	body = request.body.decode('utf-8')
+	body = json.loads(body)
+
+	email_from = body['email_from']
+	email_to = body['email_to']
+
+	user_from = Userinfo.objects.get(email=email_from)
+	user_to = Userinfo.objects.get(email=email_to)
+
+
+	if (len(list(Userconnection.objects.filter(user_email = user_from)))>=1):
+		connection_request = Userconnection.objects.get(user_email = user_from)
+		if(connection_request.first_time):
+			connection_request.connections.clear()
+			connection_request.first_time = False
+		connection_request.connections.add(user_to)
+		connection_request.save()
+		return Response("User connected", status=status.HTTP_200_OK)
+	else:
+		new_connection = Userconnection.objects.create(user_email = user_from, first_time = True)
+
+		connection_request = Userconnection.objects.filter(user_email = user_from)[0]
+		if(connection_request.first_time):
+			connection_request.connections.remove(*Userinfo.objects.all())
+			connection_request.save()
+			connection_request.first_time = False
+
+
+		# connection_request.connections.add(user_to)
+		connection_request.save()
+		return Response("User connected", status=status.HTTP_200_OK)
+
+
+	
+	
+	

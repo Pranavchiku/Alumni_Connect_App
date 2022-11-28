@@ -37,10 +37,9 @@ class Workfield(models.Model):
 
 class Userconnection(models.Model):
     user_email = models.ForeignKey(Userinfo, on_delete=models.CASCADE, related_name='user_email')
-    connections = models.ManyToManyField(Userinfo, related_name='connections')
+    connections = models.ManyToManyField(Userinfo, related_name='connections', blank=True, null = True)
+    first_time = models.BooleanField(default=True)
 
-    def __str__(self):
-        return self.user_email
 
 class Userpost(models.Model):
     email = models.ForeignKey(Userinfo, on_delete=models.CASCADE)

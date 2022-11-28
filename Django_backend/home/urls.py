@@ -16,5 +16,6 @@ urlpatterns = [
     path('get_ml_dl/', get_ml_dl, name="ML_DL"),
     path('get_ds/', get_ds, name="DS"),
     path('get_management/', get_management, name="Management"),
+    path('connect_user/', connection_request, name="Connectuser"),
 
 ]
