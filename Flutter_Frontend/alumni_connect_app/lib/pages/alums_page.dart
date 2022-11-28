@@ -8,12 +8,14 @@ class FieldAlumni extends StatefulWidget {
   bool isML_DL;
   bool isDS;
   bool isMBA;
+  String email;
 
   FieldAlumni(
       {required this.isSDE,
       required this.isML_DL,
       required this.isDS,
-      required this.isMBA});
+      required this.isMBA,
+      required this.email});
 
   @override
   State<FieldAlumni> createState() => FieldAlumniState();
@@ -46,7 +48,6 @@ class FieldAlumniState extends State<FieldAlumni> {
     } else if (widget.isDS) {
       var url = Uri.parse("http://127.0.0.1:8001/api/get_ds/");
       var response = await http.get(url);
-
       if (response.statusCode == 200) {
         var items = json.decode(response.body) as List;
         setState(() {
@@ -113,8 +114,9 @@ class FieldAlumniState extends State<FieldAlumni> {
               for (var i = 0; i < alumniList.length; i++)
                 AlumniCard(
                   name: alumniList[i]["name"],
-                  email: alumniList[i]["email"],
+                  email_to: alumniList[i]["email"],
                   imageLink: "assets/student-min.jpg",
+                  email_from: widget.email,
                 ),
             ],
           ),

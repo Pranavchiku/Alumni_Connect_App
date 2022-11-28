@@ -1,17 +1,78 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AlumniCard extends StatefulWidget {
   String name;
-  String email;
   String imageLink;
+  String email_from;
+  String email_to;
   AlumniCard(
-      {required this.name, required this.email, required this.imageLink});
+      {required this.name,
+      required this.imageLink,
+      required this.email_from,
+      required this.email_to});
 
   @override
   State<AlumniCard> createState() => _AlumniCardState();
 }
 
 class _AlumniCardState extends State<AlumniCard> {
+  bool requestProcessing = false;
+  bool tick = false;
+
+  sendRequest() async {
+    setState(() {
+      requestProcessing = true;
+    });
+
+    Map<String, dynamic> requestPayload = {
+      "email_from": widget.email_from,
+      "email_to": widget.email_to
+    };
+
+    var url = Uri.parse('http://127.0.0.1:8001/api/connect_user/');
+    var response = await http.post(
+      url,
+      body: jsonEncode(requestPayload),
+    );
+
+    var body = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      setState(() {
+        requestProcessing = false;
+        tick = true;
+      });
+    } else {
+      showError("Internal Server Error");
+    }
+  }
+
+  showError(String errormessage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ERROR'),
+          content: Text(errormessage),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'OK',
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -67,10 +128,20 @@ class _AlumniCardState extends State<AlumniCard> {
             ],
           ),
           GestureDetector(
-            onTap: () {},
-            child: Icon(
-              Icons.person_add,
-            ),
+            onTap: sendRequest,
+            child: requestProcessing
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                    ),
+                  )
+                : tick
+                    ? Icon(
+                        Icons.check,
+                      )
+                    : Icon(
+                        Icons.person_add,
+                      ),
           )
         ],
       ),

@@ -185,6 +185,7 @@ class _IndexState extends State<Index> {
                                 isML_DL: false,
                                 isDS: false,
                                 isMBA: false,
+                                email: widget.email,
                               ),
                             ),
                           );
@@ -206,6 +207,7 @@ class _IndexState extends State<Index> {
                                 isML_DL: true,
                                 isDS: false,
                                 isMBA: false,
+                                email: widget.email,
                               ),
                             ),
                           );
@@ -235,6 +237,7 @@ class _IndexState extends State<Index> {
                                 isML_DL: false,
                                 isDS: true,
                                 isMBA: false,
+                                email: widget.email,
                               ),
                             ),
                           );
@@ -256,6 +259,7 @@ class _IndexState extends State<Index> {
                                 isML_DL: false,
                                 isDS: false,
                                 isMBA: true,
+                                email: widget.email,
                               ),
                             ),
                           );
