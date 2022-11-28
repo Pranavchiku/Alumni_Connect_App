@@ -2,8 +2,10 @@ import 'package:alumni_connect_app/main.dart';
 import 'package:alumni_connect_app/pages/alums_page.dart';
 import 'package:alumni_connect_app/pages/post_page.dart';
 import 'package:alumni_connect_app/widget/image.dart';
+import 'package:alumni_connect_app/widget/post_card.dart';
 import 'package:alumni_connect_app/widget/top_suggestion_card.dart';
 import 'package:flutter/material.dart';
+import 'package:readmore/readmore.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -17,10 +19,12 @@ class Index extends StatefulWidget {
 
 class _IndexState extends State<Index> {
   List<dynamic> _topSuggestionCard = <Widget>[];
+  List<dynamic> _latestPosts = [];
   String? _sdeCount = "0";
   String? ml_dlCount = "0";
   String? _dsCount = "0";
   String? _mbaCount = "0";
+  String to_email = "";
 
   fetchTopSuggestion() async {
     var url = Uri.parse('http://127.0.0.1:8001/api/top_suggestion/');
@@ -63,11 +67,64 @@ class _IndexState extends State<Index> {
     }
   }
 
+  fetchLatestUpdates() async {
+    var url = Uri.parse('http://127.0.0.1:8001/api/get_posts/');
+    Map<String, dynamic> requestPayload = {"email": widget.email};
+
+    var response = await http.post(
+      url,
+      body: jsonEncode(requestPayload),
+    );
+
+    var body = jsonDecode(response.body) as List;
+
+    List<dynamic> temp = <Widget>[];
+    // iterate over body and create a list of post cards
+    if (response.statusCode == 200) {
+      for (var i = 0; i < body.length; i++) {
+        temp.add(PostCard(
+          name: body[i]['name'],
+          imageLink: "assets/student-min.jpg",
+          email: widget.email,
+          description: body[i]['description'],
+        ));
+      }
+      setState(() {
+        _latestPosts = temp;
+      });
+    } else {
+      showError("Internal server Error");
+    }
+  }
+
+  showError(String errormessage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ERROR'),
+          content: Text(errormessage),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'OK',
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
     fetchTopSuggestion();
     fetchFieldCount();
+    fetchLatestUpdates();
   }
 
   Widget build(BuildContext context) {
@@ -290,24 +347,7 @@ class _IndexState extends State<Index> {
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                height: size.height * 0.07,
-                width: size.width * 0.9,
-                decoration: BoxDecoration(
-                  color: Colors.blue[900],
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: TextButton(
-                  onPressed: fetchTopSuggestion,
-                  child: Text(
-                    "Temp",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              ),
+              for (var i = 0; i < _latestPosts.length; i++) _latestPosts[i]
             ],
           ),
         ),

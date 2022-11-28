@@ -157,7 +157,7 @@ class _AlumniPostState extends State<AlumniPost> {
                               hintText: "Image link",
                               prefixIcon: Icon(Icons.image),
                             ),
-                            obscureText: true,
+                            obscureText: false,
                             onSaved: (input) => _image = input!,
                           ),
                         ),
