@@ -1,5 +1,6 @@
 import 'package:alumni_connect_app/main.dart';
 import 'package:alumni_connect_app/pages/alums_page.dart';
+import 'package:alumni_connect_app/pages/post_page.dart';
 import 'package:alumni_connect_app/widget/image.dart';
 import 'package:alumni_connect_app/widget/top_suggestion_card.dart';
 import 'package:flutter/material.dart';
@@ -333,7 +334,13 @@ class _IndexState extends State<Index> {
               ),
               IconButton(
                 icon: Icon(Icons.add_box_outlined, color: Colors.black),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AlumniPost(email: widget.email)),
+                  );
+                },
               ),
               IconButton(
                 icon: Icon(Icons.logout, color: Colors.black),

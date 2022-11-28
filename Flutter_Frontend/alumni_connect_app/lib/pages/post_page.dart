@@ -1,5 +1,8 @@
+import 'package:alumni_connect_app/pages/index.dart';
 import 'package:alumni_connect_app/pages/signup.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AlumniPost extends StatefulWidget {
   String email;
@@ -12,6 +15,59 @@ class AlumniPost extends StatefulWidget {
 class _AlumniPostState extends State<AlumniPost> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? _description, _image;
+
+  postHandler() async {
+    if (_formKey != null &&
+        _formKey.currentState != null &&
+        _formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      Map<String, dynamic> requestPayload = {
+        "email": widget.email,
+        "description": _description,
+        "image_link": _image
+      };
+
+      var url = Uri.parse('http://127.0.0.1:8001/api/create_post/');
+      var response = await http.post(
+        url,
+        body: jsonEncode(requestPayload),
+      );
+
+      var body = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => Index(email: widget.email)),
+            (route) => false);
+      } else {
+        showError("Internal Server Error");
+      }
+    }
+  }
+
+  showError(String errormessage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ERROR'),
+          content: Text(errormessage),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'OK',
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +178,7 @@ class _AlumniPostState extends State<AlumniPost> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: postHandler,
                       child: Text(
                         "Post",
                         style: TextStyle(
