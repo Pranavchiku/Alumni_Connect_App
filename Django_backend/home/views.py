@@ -404,6 +404,18 @@ def get_posts(request):
 	return Response(final_list, status=status.HTTP_200_OK)
 
 
-	
-	
-	
+@api_view(['GET'])
+def get_all_users(request):
+	allUsers = Userinfo.objects.all()
+	allUsers = serializers.serialize('json', allUsers)
+	allUsers = json.loads(allUsers)
+
+	final_list = []
+	for i in allUsers:
+		dict = {
+			"name": i['fields']['name'],
+			"email": i['fields']['email']
+		}
+		final_list.append(dict)
+
+	return Response(final_list, status=status.HTTP_200_OK)
