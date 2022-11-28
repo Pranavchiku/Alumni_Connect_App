@@ -1,5 +1,6 @@
 import 'package:alumni_connect_app/main.dart';
 import 'package:alumni_connect_app/pages/alums_page.dart';
+import 'package:alumni_connect_app/pages/connection_page.dart';
 import 'package:alumni_connect_app/pages/post_page.dart';
 import 'package:alumni_connect_app/widget/image.dart';
 import 'package:alumni_connect_app/widget/post_card.dart';
@@ -370,7 +371,14 @@ class _IndexState extends State<Index> {
               ),
               IconButton(
                 icon: Icon(Icons.person_add, color: Colors.black),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ConnectionPage(email: widget.email)),
+                  );
+                },
               ),
               IconButton(
                 icon: Icon(Icons.add_box_outlined, color: Colors.black),
