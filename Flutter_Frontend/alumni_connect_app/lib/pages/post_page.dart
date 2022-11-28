@@ -1,3 +1,5 @@
+import 'package:alumni_connect_app/main.dart';
+import 'package:alumni_connect_app/pages/connection_page.dart';
 import 'package:alumni_connect_app/pages/index.dart';
 import 'package:alumni_connect_app/pages/signup.dart';
 import 'package:flutter/material.dart';
@@ -194,6 +196,89 @@ class _AlumniPostState extends State<AlumniPost> {
           ),
         ),
       ),
+      bottomNavigationBar: Container(
+        height: 55.0,
+        child: BottomAppBar(
+          color: Colors.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.home, color: Colors.black),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Index(email: widget.email)));
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.person_add, color: Colors.black),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ConnectionPage(email: widget.email)),
+                  );
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.add_box_outlined, color: Colors.black),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AlumniPost(email: widget.email)),
+                  );
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.logout, color: Colors.black),
+                onPressed: () {
+                  showAlertDialog(context);
+                },
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
+}
+
+showAlertDialog(BuildContext context) {
+  // set up the button
+  // Widget logOutButton = SalomonBottomBarItem(
+  //   icon: Icon(Icons.logout),
+  //   title: Text("LogOut"),
+  //   selectedColor: Colors.redAccent,
+  // );
+  Widget okButton = TextButton(
+    child: Text("Logout"),
+    onPressed: () {
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LandingPage()),
+          (route) => false);
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Logout Alert!!"),
+    content: Text("Are you sure you want to logout?"),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
