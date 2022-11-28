@@ -17,5 +17,5 @@ urlpatterns = [
     path('get_ds/', get_ds, name="DS"),
     path('get_management/', get_management, name="Management"),
     path('connect_user/', connection_request, name="Connectuser"),
-
+    path('create_post/', create_post, name="Createpost"),
 ]

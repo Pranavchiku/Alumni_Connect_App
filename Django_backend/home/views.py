@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 import json
+from datetime import date
 
 # Create your views here.
 @api_view(['GET'])
@@ -362,6 +363,20 @@ def connection_request(request):
 		connection_request.save()
 		return Response("User connected", status=status.HTTP_200_OK)
 
+@api_view(['POST'])
+def create_post(request):
+	body = request.body.decode('utf-8')
+	body = json.loads(body)
+
+	email = body['email']
+	description = body['description']
+	curr_date = str(date.today())
+	image_link = body['image_link']
+
+	user = Userinfo.objects.get(email=email)
+	new_post = Userpost.objects.create(email=user, descript=description, date=curr_date, image=image_link)
+
+	return Response("Post created", status=status.HTTP_200_OK)
 
 	
 	
