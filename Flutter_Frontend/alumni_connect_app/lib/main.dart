@@ -1,6 +1,7 @@
 import 'package:alumni_connect_app/pages/education_info.dart';
 import 'package:alumni_connect_app/pages/index.dart';
 import 'package:alumni_connect_app/pages/login.dart';
+import 'package:alumni_connect_app/pages/post_page.dart';
 import 'package:alumni_connect_app/pages/signup.dart';
 import 'package:alumni_connect_app/widget/image.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,8 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(
     MaterialApp(
-      home: Index(email: "goswami.4@iitj.ac.in"),
+      // home: Index(email: "goswami.4@iitj.ac.in"),
+      home: AlumniPost(email: "goswami.4@iitj.ac.in"),
       debugShowCheckedModeBanner: false,
     ),
   );
