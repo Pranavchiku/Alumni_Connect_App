@@ -18,4 +18,5 @@ urlpatterns = [
     path('get_management/', get_management, name="Management"),
     path('connect_user/', connection_request, name="Connectuser"),
     path('create_post/', create_post, name="Createpost"),
+    path('get_posts/', get_posts, name="Getposts"),
 ]

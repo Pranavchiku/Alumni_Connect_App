@@ -379,7 +379,7 @@ def create_post(request):
 	return Response("Post created", status=status.HTTP_200_OK)
 
 @api_view(['GET','POST'])
-def get_updates(request):
+def get_posts(request):
 	body = request.body.decode('utf-8')
 	body = json.loads(body)
 
@@ -387,8 +387,23 @@ def get_updates(request):
 
 	user = Userinfo.objects.get(email=email)
 
-	posts = Userpost.objects.all()
+	posts = list(Userpost.objects.all())
+
+	final_list = []
+	for post in posts:
+		if(post.email!=user):
+			dict = {
+				"email": post.email.email,
+				"description": post.descript,
+				"date": post.date,
+				"image_link": post.image,
+				"name": post.email.name
+			}
+			final_list.append(dict)
 	
+	return Response(final_list, status=status.HTTP_200_OK)
+
+
 	
 	
 	
