@@ -378,6 +378,17 @@ def create_post(request):
 
 	return Response("Post created", status=status.HTTP_200_OK)
 
+@api_view(['GET','POST'])
+def get_updates(request):
+	body = request.body.decode('utf-8')
+	body = json.loads(body)
+
+	email = body['email']
+
+	user = Userinfo.objects.get(email=email)
+
+	posts = Userpost.objects.all()
+	
 	
 	
 	

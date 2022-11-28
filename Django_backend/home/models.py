@@ -47,3 +47,5 @@ class Userpost(models.Model):
     image = models.CharField(max_length=100, default=None)
     descript = models.CharField(max_length=500, default=None)
 
+    class Meta:
+        ordering = ['-date']
