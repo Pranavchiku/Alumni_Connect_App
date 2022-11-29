@@ -80,14 +80,11 @@ flutter upgrade
 <img src = "https://github.com/Pranavchiku/Alumni_Connect_App/blob/main/Pictures/2.png?raw=true" width="150" height="300">
 <img src = "https://github.com/Pranavchiku/Alumni_Connect_App/blob/main/Pictures/3.png?raw=true" width="150" height="300">
 <img src = "https://github.com/Pranavchiku/Alumni_Connect_App/blob/main/Pictures/4.png?raw=true" width="150" height="300">
-  
+<img src = "https://github.com/Pranavchiku/Alumni_Connect_App/blob/main/Pictures/5.png?raw=true" width="150" height="300">
 </p>
 <p float="left">
-<img src = "https://github.com/Pranavchiku/Alumni_Connect_App/blob/main/Pictures/5.png?raw=true" width="150" height="300">
 <img src = "https://github.com/Pranavchiku/Alumni_Connect_App/blob/main/Pictures/6.png?raw=true" width="150" height="300">
 <img src = "https://github.com/Pranavchiku/Alumni_Connect_App/blob/main/Pictures/7.png?raw=true" width="150" height="300">
 <img src = "https://github.com/Pranavchiku/Alumni_Connect_App/blob/main/Pictures/8.png?raw=true" width="150" height="300">
-</p>
-<p float="left">
 <img src = "https://github.com/Pranavchiku/Alumni_Connect_App/blob/main/Pictures/9.png?raw=true" width="150" height="300">
 </p>
