@@ -44,7 +44,7 @@ class _IndexState extends State<Index> {
         tempCard.add(TopSuggestionCard(
             name: body[i]['name'],
             imageLink: "assets/student-min.jpg",
-            designation: "CEO at Apple"));
+            designation: ""));
       }
       setState(() {
         _topSuggestionCard = tempCard;

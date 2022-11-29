@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(
     MaterialApp(
-      home: Index(email: "goswami.4@iitj.ac.in"),
+      // home: Index(email: "goswami.4@iitj.ac.in"),
       // home: AlumniPost(email: "goswami.4@iitj.ac.in"),
-      // home: LandingPage(),
+      home: LandingPage(),
       debugShowCheckedModeBanner: false,
     ),
   );

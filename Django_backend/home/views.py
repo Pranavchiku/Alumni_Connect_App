@@ -57,6 +57,7 @@ def user_signup(request):
 		email = body['email'],
 		phone = body['phone'],
 		password = body['password'],
+		image = "#"
 	)
 
 	res = Response(json.dumps({"message": "User succesfully created."}), status=status.HTTP_201_CREATED, content_type='application/json')
